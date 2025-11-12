@@ -12,7 +12,7 @@ public class GreetingController {
     @RequestMapping("/greet")
     public String greet(Principal principal) {
         String username = principal.getName();
-        return String.format("Hallo, %s!", username);
+        return String.format("Hello, %s!", username);
     }
 
 }

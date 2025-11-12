@@ -1,6 +1,8 @@
 package io.github.sboe0705.sample.basicauth.security;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -10,12 +12,15 @@ import java.util.Optional;
 @Service
 public class UserRepositoryImpl implements UserRepository {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private final Map<String, String> encryptedPasswordsByUsername = new HashMap<>();
 
     @PostConstruct
     void init() {
-        encryptedPasswordsByUsername.put("alice", "$2a$10$a19mFFWkTbND6LyNCuiemu5ayRStJWzWjMCZHz5N9EfJCye4nXYta");
-        encryptedPasswordsByUsername.put("bob", "$2a$10$I06pjb6wx9R/rcm98sbsYeNk6x/VJdYbSxmwM1fpVhGWnFqjb/MBi");
+        encryptedPasswordsByUsername.put("alice", passwordEncoder.encode("alice"));
+        encryptedPasswordsByUsername.put("bob", passwordEncoder.encode("bob"));
     }
 
     @Override
